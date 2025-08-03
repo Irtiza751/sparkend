@@ -1,6 +1,7 @@
 import { Options } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { config } from 'dotenv';
+import { Migrator } from '@mikro-orm/migrations';
 
 config();
 
@@ -14,13 +15,20 @@ const mikroOrmConfig: Options = {
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   migrations: {
-    path: 'dist/migrations',
-    pathTs: 'src/migrations',
+    path: 'dist/migrations',   // for production
+    pathTs: 'src/migrations',  // for development
+    glob: '!(*.d).{js,ts}',    // recommended to support both
+    transactional: true,
+    disableForeignKeys: false,
+    emit: 'ts',                // keep migrations in TS
   },
   seeder: {
     path: 'dist/seeders',
     pathTs: 'src/seeders',
   },
+  extensions: [
+    Migrator,
+  ]
 };
 
 export default mikroOrmConfig;

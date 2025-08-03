@@ -6,11 +6,11 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
-import { BaseEntity } from 'src/classes/base-entity';
 import { AuthProvider } from '../enums/auth-provider';
 import { UserRole } from '../enums/user-role';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcryptjs';
+import { BaseEntity } from '../../classes/base-entity';
 
 @Entity()
 export class User extends BaseEntity {

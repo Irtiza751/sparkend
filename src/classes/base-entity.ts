@@ -1,7 +1,7 @@
 import { PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 
-export class BaseEntity {
+export abstract class BaseEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 

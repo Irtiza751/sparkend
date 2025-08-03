@@ -8,7 +8,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 @Injectable()
 export class DatabaseConfig implements MikroOrmOptionsFactory {
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) { }
 
   createMikroOrmOptions(): MikroOrmModuleOptions {
     return {
@@ -18,11 +18,15 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
       user: this.configService.get<string>('DB_USER', 'postgres'),
       password: this.configService.get<string>('DB_PASSWORD', 'password'),
       dbName: this.configService.get<string>('DB_NAME', 'nestjs_boilerplate'),
-      entities: ['dist/**/*.entity.js'],
+      // entities: ['dist/**/*.entity.js'],
       entitiesTs: ['src/**/*.entity.ts'],
       migrations: {
         path: 'dist/migrations',
         pathTs: 'src/migrations',
+        glob: '!(*.d).{js,ts}', // recommended to support bot
+        transactional: true,
+        disableForeignKeys: false,
+        emit: 'ts', // keep migrations in TS
       },
       seeder: {
         path: 'dist/seeders',
