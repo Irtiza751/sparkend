@@ -2,8 +2,9 @@ import {
   EntityManager,
   EntityRepository,
   RequiredEntityData,
+  UniqueConstraintViolationException,
 } from '@mikro-orm/postgresql';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -20,7 +21,7 @@ export class UserProvider {
      * @description Injecting the EntityManager for advanced database operations
      */
     private readonly em: EntityManager,
-  ) {}
+  ) { }
 
   async createUser(createUserDto: CreateUserDto) {
     try {
@@ -32,6 +33,11 @@ export class UserProvider {
         message: 'User created successfully',
         user,
       };
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof UniqueConstraintViolationException) {
+        throw new ConflictException(`Usernmae and email must be unique.`);
+      }
+      throw new InternalServerErrorException('Failed to create user');
+    }
   }
 }
