@@ -7,12 +7,18 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { DatabaseConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import appConfig from './config/app.config';
+import validateEnv from './config/validate.env';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env.local', '.env'],
+      validationSchema: validateEnv,
+      load: [
+        appConfig,
+      ]
     }),
     ThrottlerModule.forRoot([
       {
@@ -29,4 +35,4 @@ import { UserModule } from './user/user.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

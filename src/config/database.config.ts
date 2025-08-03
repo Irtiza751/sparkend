@@ -18,7 +18,7 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
       user: this.configService.get<string>('DB_USER', 'postgres'),
       password: this.configService.get<string>('DB_PASSWORD', 'password'),
       dbName: this.configService.get<string>('DB_NAME', 'nestjs_boilerplate'),
-      // entities: ['dist/**/*.entity.js'],
+      entities: ['dist/**/*.entity.js'],
       entitiesTs: ['src/**/*.entity.ts'],
       migrations: {
         path: 'dist/migrations',
