@@ -108,7 +108,8 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
+          "default": "false",
           "mappedType": "boolean"
         },
         "avatar": {
@@ -127,7 +128,8 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
+          "default": "true",
           "mappedType": "boolean"
         }
       },

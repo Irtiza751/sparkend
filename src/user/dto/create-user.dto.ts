@@ -4,7 +4,7 @@ import { UserRole } from "../enums/user-role";
 import { IsEmail, IsEnum, IsOptional, IsString, IsBoolean, MinLength } from "class-validator";
 
 export class CreateUserDto {
-  @ApiProperty({ example: '', description: 'Username of the user' })
+  @ApiProperty({ example: 'johndoe', description: 'Username of the user' })
   @IsString()
   username: string;
 

@@ -19,6 +19,15 @@ export class UserProvider {
   ) { }
 
   async createUser(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto as RequiredEntityData<User>);
+    try {
+      const user = this.userRepository.create(createUserDto as RequiredEntityData<User>);
+      await this.em.persistAndFlush(user);
+      return {
+        message: 'User created successfully',
+        user,
+      }
+    } catch (error) {
+
+    }
   }
 }

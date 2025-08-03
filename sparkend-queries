@@ -1,0 +1,6 @@
+SELECT * FROM public."user"
+ORDER BY id ASC 
+
+update "user"
+set username = 'johndoe'
+where id = '800e7ad7-86fa-4e5f-a47d-e4ed3bb9f333';

@@ -16,7 +16,7 @@ import { BaseEntity } from '../../classes/base-entity';
 export class User extends BaseEntity {
   @Property()
   @Unique()
-  @ApiProperty({ example: 'john.doe@example.com' })
+  @ApiProperty({ example: 'johndoe' })
   username: string;
 
   @Property()
