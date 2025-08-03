@@ -4,6 +4,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserProvider } from '../user/providers/user-provider';
 import { CreateUserDto } from '../user/dto/create-user.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -15,10 +16,10 @@ export class AuthService {
     /**
      * @description The UserProvider is used to interact with user data.
      */
-    private readonly userProvider: UserProvider,
+    private readonly userSevice: UserService,
   ) {}
 
   createUser(createUserDto: CreateUserDto) {
-    return this.userProvider.createUser(createUserDto);
+    return this.userSevice.create(createUserDto);
   }
 }

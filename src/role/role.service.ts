@@ -1,9 +1,18 @@
-import { ConflictException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Role } from './entities/role.entity';
-import { EntityManager, EntityRepository, UniqueConstraintViolationException } from '@mikro-orm/postgresql';
+import {
+  EntityManager,
+  EntityRepository,
+  UniqueConstraintViolationException,
+} from '@mikro-orm/postgresql';
 
 @Injectable()
 export class RoleService {
@@ -17,7 +26,7 @@ export class RoleService {
      * @description Injecting the EntityManager for advanced database operations
      */
     private readonly em: EntityManager,
-  ) { }
+  ) {}
 
   async create(createRoleDto: CreateRoleDto) {
     try {
@@ -29,7 +38,9 @@ export class RoleService {
       };
     } catch (error) {
       if (error instanceof UniqueConstraintViolationException) {
-        throw new ConflictException(`Role with name '${createRoleDto.name}' already exists.`);
+        throw new ConflictException(
+          `Role with name '${createRoleDto.name}' already exists.`,
+        );
       }
       Logger.error('Error creating role:', error.message);
       throw new InternalServerErrorException('Failed to create role');
