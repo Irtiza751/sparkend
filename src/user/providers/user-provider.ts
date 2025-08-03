@@ -1,7 +1,8 @@
-import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
+import { EntityManager, EntityRepository, RequiredEntityData } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
 export class UserProvider {
@@ -16,4 +17,8 @@ export class UserProvider {
     */
     private readonly em: EntityManager,
   ) { }
+
+  async createUser(createUserDto: CreateUserDto) {
+    const user = this.userRepository.create(createUserDto as RequiredEntityData<User>);
+  }
 }

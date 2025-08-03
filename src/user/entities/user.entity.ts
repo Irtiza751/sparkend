@@ -39,17 +39,17 @@ export class User extends BaseEntity {
   @ApiProperty({ example: 'google-id-123' })
   providerId?: string;
 
-  @Property({ type: 'boolean' })
+  @Property({ type: 'boolean', nullable: true, default: false })
   @ApiProperty({ example: false })
-  vefified: boolean;
+  vefified?: boolean;
 
   @Property({ nullable: true })
   @ApiProperty({ example: 'profile-picture.jpg' })
   avatar?: string;
 
-  @Property({ type: 'boolean' })
+  @Property({ type: 'boolean', default: true, nullable: true })
   @ApiProperty({ example: true })
-  isActive: boolean;
+  isActive?: boolean;
 
   @BeforeCreate()
   @BeforeUpdate()
