@@ -1,8 +1,10 @@
 import {
   BeforeCreate,
   BeforeUpdate,
+  Collection,
   Entity,
   Enum,
+  ManyToMany,
   Property,
   Unique,
 } from '@mikro-orm/core';
@@ -11,6 +13,7 @@ import { UserRole } from '../enums/user-role';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcryptjs';
 import { BaseEntity } from '../../classes/base-entity';
+import { Role } from '../../role/entities/role.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -27,9 +30,10 @@ export class User extends BaseEntity {
   @Property({ hidden: true, nullable: true })
   password: string;
 
-  @Enum(() => UserRole)
-  @ApiProperty({ enum: UserRole, example: UserRole.USER })
-  role: UserRole = UserRole.USER;
+  // @Enum(() => UserRole)
+  // @ApiProperty({ enum: UserRole, example: UserRole.USER })
+  @ManyToMany(() => Role, (role) => role.users, { owner: true })
+  roles = new Collection<Role>(this);
 
   @Enum(() => AuthProvider)
   @ApiProperty({ enum: AuthProvider, example: AuthProvider.LOCAL })
