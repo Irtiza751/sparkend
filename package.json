@@ -21,16 +21,7 @@
     "migration:create": "mikro-orm migration:create",
     "migration:up": "mikro-orm migration:up",
     "migration:down": "mikro-orm migration:down",
-    "migration:list": "mikro-orm migration:list",
-    "migration:check": "mikro-orm migration:check",
-    "migration:pending": "mikro-orm migration:pending",
-    "schema:create": "mikro-orm schema:create",
-    "schema:drop": "mikro-orm schema:drop",
-    "schema:update": "mikro-orm schema:update",
-    "schema:fresh": "mikro-orm schema:fresh",
-    "seeder:run": "mikro-orm seeder:run",
-    "seeder:create": "mikro-orm seeder:create",
-    "cache:clear": "mikro-orm cache:clear"
+    "seed": "mikro-orm seeder:run"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.4.16",

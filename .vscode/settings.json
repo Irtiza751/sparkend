@@ -1,0 +1,6 @@
+{
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "editor.formatOnSave": true,
+    "editor.indentSize": 2,
+    "editor.tabSize": 2,
+}

@@ -1,0 +1,66 @@
+import {
+  BeforeCreate,
+  BeforeUpdate,
+  Entity,
+  Enum,
+  Property,
+  Unique,
+} from '@mikro-orm/core';
+import { BaseEntity } from 'src/classes/base-entity';
+import { AuthProvider } from '../enums/auth-provider';
+import { UserRole } from '../enums/user-role';
+import { ApiProperty } from '@nestjs/swagger';
+import * as bcrypt from 'bcryptjs';
+
+@Entity()
+export class User extends BaseEntity {
+  @Property()
+  @Unique()
+  @ApiProperty({ example: 'john.doe@example.com' })
+  username: string;
+
+  @Property()
+  @Unique()
+  @ApiProperty({ example: 'John Doe' })
+  email: string;
+
+  @Property({ hidden: true, nullable: true })
+  password: string;
+
+  @Enum(() => UserRole)
+  @ApiProperty({ enum: UserRole, example: UserRole.USER })
+  role: UserRole = UserRole.USER;
+
+  @Enum(() => AuthProvider)
+  @ApiProperty({ enum: AuthProvider, example: AuthProvider.LOCAL })
+  provider: AuthProvider;
+
+  @Property({ nullable: true })
+  @ApiProperty({ example: 'google-id-123' })
+  providerId?: string;
+
+  @Property({ type: 'boolean' })
+  @ApiProperty({ example: false })
+  vefified: boolean;
+
+  @Property({ nullable: true })
+  @ApiProperty({ example: 'profile-picture.jpg' })
+  avatar?: string;
+
+  @Property({ type: 'boolean' })
+  @ApiProperty({ example: true })
+  isActive: boolean;
+
+  @BeforeCreate()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password && !this.password.startsWith('$2a$')) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    if (!this.password) return false;
+    return bcrypt.compare(password, this.password);
+  }
+}

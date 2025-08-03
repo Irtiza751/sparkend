@@ -29,18 +29,18 @@ async function bootstrap() {
 
   // Swagger
   const config = new DocumentBuilder()
-    .setTitle('NestJS API Boilerplate')
+    .setTitle('NestJS API Boilerplate (Sparkend)')
     .setDescription('Complete NestJS API with authentication and file upload')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
   const port = configService.get<number>('PORT') || 3000;
   await app.listen(port);
-  
+
   console.log(`Application running on: http://localhost:${port}`);
   console.log(`Swagger docs: http://localhost:${port}/api/docs`);
 }
