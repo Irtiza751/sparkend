@@ -1,7 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { AuthProvider } from "../enums/auth-provider";
-import { UserRole } from "../enums/user-role";
-import { IsEmail, IsEnum, IsOptional, IsString, IsBoolean, MinLength } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { AuthProvider } from '../enums/auth-provider';
+import { UserRole } from '../enums/user-role';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsBoolean,
+  MinLength,
+} from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'johndoe', description: 'Username of the user' })
@@ -22,7 +29,11 @@ export class CreateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
 
-  @ApiProperty({ enum: AuthProvider, example: AuthProvider.LOCAL, required: false })
+  @ApiProperty({
+    enum: AuthProvider,
+    example: AuthProvider.LOCAL,
+    required: false,
+  })
   @IsOptional()
   @IsEnum(AuthProvider)
   provider: AuthProvider;

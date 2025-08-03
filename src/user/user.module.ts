@@ -9,6 +9,6 @@ import { UserProvider } from './providers/user-provider';
   controllers: [UserController],
   providers: [UserService, UserProvider],
   imports: [MikroOrmModule.forFeature([User])],
-  exports: [UserProvider]
+  exports: [UserProvider],
 })
-export class UserModule { }
+export class UserModule {}

@@ -17,9 +17,7 @@ import validateEnv from './config/validate.env';
       isGlobal: true,
       envFilePath: ['.env.local', '.env'],
       validationSchema: validateEnv,
-      load: [
-        appConfig,
-      ]
+      load: [appConfig],
     }),
     ThrottlerModule.forRoot([
       {
@@ -37,4 +35,4 @@ import validateEnv from './config/validate.env';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

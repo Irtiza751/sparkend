@@ -1,4 +1,8 @@
-import { EntityManager, EntityRepository, RequiredEntityData } from '@mikro-orm/postgresql';
+import {
+  EntityManager,
+  EntityRepository,
+  RequiredEntityData,
+} from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -9,25 +13,25 @@ export class UserProvider {
   constructor(
     /**
      * @description Injecting the User repository to perform CRUD operations
-    */
+     */
     @InjectRepository(User)
     private readonly userRepository: EntityRepository<User>,
     /**
      * @description Injecting the EntityManager for advanced database operations
-    */
+     */
     private readonly em: EntityManager,
-  ) { }
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
     try {
-      const user = this.userRepository.create(createUserDto as RequiredEntityData<User>);
+      const user = this.userRepository.create(
+        createUserDto as RequiredEntityData<User>,
+      );
       await this.em.persistAndFlush(user);
       return {
         message: 'User created successfully',
         user,
-      }
-    } catch (error) {
-
-    }
+      };
+    } catch (error) {}
   }
 }

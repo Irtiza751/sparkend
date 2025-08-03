@@ -10,7 +10,7 @@ export abstract class BaseEntity<Optional = never> {
    * @description Optional properties that can be added to the entity
    * @type {OptionalProps}
    * @example 'createdAt' | 'updatedAt' | 'slug' etc...
-  */
+   */
   [OptionalProps]?: 'createdAt' | 'updatedAt' | Optional;
 
   @PrimaryKey({ type: 'uuid' })

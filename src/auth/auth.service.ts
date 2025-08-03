@@ -10,13 +10,13 @@ export class AuthService {
   constructor(
     /**
      * @description The JWT service is used to sign and verify JSON Web Tokens.
-    */
+     */
     private readonly jwtService: JwtService,
     /**
      * @description The UserProvider is used to interact with user data.
-    */
+     */
     private readonly userProvider: UserProvider,
-  ) { }
+  ) {}
 
   createUser(createUserDto: CreateUserDto) {
     return this.userProvider.createUser(createUserDto);
