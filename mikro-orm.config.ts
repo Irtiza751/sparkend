@@ -2,6 +2,7 @@ import { Options } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { config } from 'dotenv';
 import { Migrator } from '@mikro-orm/migrations';
+import { SeedManager } from '@mikro-orm/seeder';
 
 config();
 
@@ -28,6 +29,7 @@ const mikroOrmConfig: Options = {
   },
   extensions: [
     Migrator,
+    SeedManager
   ]
 };
 

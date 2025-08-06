@@ -21,7 +21,8 @@
     "migration:create": "mikro-orm migration:create",
     "migration:up": "mikro-orm migration:up",
     "migration:down": "mikro-orm migration:down",
-    "seed": "mikro-orm seeder:run"
+    "seeder:create": "mikro-orm seeder:create",
+    "seeder:run": "mikro-orm seeder:run"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.4.16",
