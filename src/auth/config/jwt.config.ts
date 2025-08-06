@@ -1,4 +1,4 @@
-import { registerAs } from "@nestjs/config";
+import { registerAs } from '@nestjs/config';
 
 export default registerAs('jwtCofnig', () => ({
   jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
@@ -7,4 +7,4 @@ export default registerAs('jwtCofnig', () => ({
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_TTL,
   jwtIssuer: process.env.JWT_ISSUER,
   jwtAudience: process.env.JWT_AUDIENCE,
-}))
+}));

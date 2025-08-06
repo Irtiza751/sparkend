@@ -1,7 +1,18 @@
-import { PrimaryKey, Property } from '@mikro-orm/core';
+import { OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 
-export abstract class BaseEntity {
+/**
+ * @deiscription BaseEntity class that provides common properties for all entities
+ * @template Optional - Optional properties that can be added to the entity
+ */
+export abstract class BaseEntity<Optional = never> {
+  /**
+   * @description Optional properties that can be added to the entity
+   * @type {OptionalProps}
+   * @example 'createdAt' | 'updatedAt' | 'slug' etc...
+   */
+  [OptionalProps]?: 'createdAt' | 'updatedAt' | Optional;
+
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 

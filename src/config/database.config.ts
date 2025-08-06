@@ -8,7 +8,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 @Injectable()
 export class DatabaseConfig implements MikroOrmOptionsFactory {
-  constructor(private configService: ConfigService) { }
+  constructor(private configService: ConfigService) {}
 
   createMikroOrmOptions(): MikroOrmModuleOptions {
     return {

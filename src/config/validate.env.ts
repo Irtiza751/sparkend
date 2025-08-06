@@ -19,4 +19,4 @@ export default Joi.object({
   JWT_AUDIENCE: Joi.string().required(),
   JWT_ACCESS_TTL: Joi.string().required(),
   JWT_REFRESH_TTL: Joi.string().required(),
-})
+});
