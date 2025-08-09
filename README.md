@@ -1,5 +1,7 @@
 # Sparkend REST API Boilerplate
 
+![logo](/assets/logo.svg)
+
 ## Description
 NestJS REST API boilerplate for a trditional projects
 
