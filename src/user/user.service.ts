@@ -34,7 +34,7 @@ export class UserService {
      * @description The RoleProvider is used to interact with role data.
      */
     private readonly roleProvider: RoleProvider,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     let role: Role | null = null;
@@ -58,7 +58,7 @@ export class UserService {
       };
     } catch (error) {
       if (error instanceof UniqueConstraintViolationException) {
-        throw new ConflictException(`Usernmae and email must be unique.`);
+        throw new ConflictException(`Username and email must be unique.`);
       }
       throw new InternalServerErrorException('Failed to create user');
     }

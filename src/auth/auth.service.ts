@@ -22,14 +22,14 @@ export class AuthService {
      * @description The UserProvider is used to interact with user data.
      */
     private readonly userSevice: UserService,
-  ) {}
+  ) { }
 
   createUser(createUserDto: CreateUserDto) {
     return this.userSevice.create(createUserDto);
   }
 
   async validateUser(username: string, password: string) {
-    const user = await this.userSevice.findOne(username);
+    const user = await this.userSevice.findByUsername(username);
     if (!user) {
       throw new NotFoundException('User does not exist');
     }
