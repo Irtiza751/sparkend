@@ -4,7 +4,6 @@ import { AuthProvider } from '../user/enums/auth-provider';
 import { User } from '../user/entities/user.entity';
 
 export class UserSeeder extends Seeder {
-
   async run(em: EntityManager, context: Dictionary): Promise<void> {
     const users = [
       {
@@ -19,15 +18,14 @@ export class UserSeeder extends Seeder {
         email: 'jane.doe@example.com',
         username: 'janedoe',
         password: 'password123',
-        roles: [context.adminRole, context.userRole],
+        roles: [context.userRole],
         provider: AuthProvider.LOCAL,
         isEmailVerified: false,
       },
-    ]
+    ];
 
     for (let userData of users) {
-      em.create(User, userData)
+      em.create(User, userData);
     }
   }
-
 }

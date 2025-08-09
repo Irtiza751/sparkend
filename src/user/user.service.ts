@@ -34,7 +34,7 @@ export class UserService {
      * @description The RoleProvider is used to interact with role data.
      */
     private readonly roleProvider: RoleProvider,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     let role: Role | null = null;
@@ -58,25 +58,33 @@ export class UserService {
       };
     } catch (error) {
       if (error instanceof UniqueConstraintViolationException) {
-        throw new ConflictException(`Usernmae and email must be unique.`);
+        throw new ConflictException(`Username and email must be unique.`);
       }
       throw new InternalServerErrorException('Failed to create user');
     }
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.userRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    return this.userRepository.findOne(id, { populate: ['roles'] });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  findByUsername(username: string) {
+    return this.userRepository.findOne({ username }, { populate: ['roles'] });
+  }
+
+  findByEmail(email: string) {
+    return this.userRepository.findOne({ email }, { populate: ['roles'] });
+  }
+
+  update(id: string, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 }
