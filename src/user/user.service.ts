@@ -68,15 +68,19 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    return this.userRepository.findOne(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  findByUsername(username: string) {
+    return this.userRepository.findOne({ username });
+  }
+
+  update(id: string, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 }

@@ -8,10 +8,11 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import jwtConfig from './config/jwt.config';
 import { UserModule } from '../user/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthController, GoogleController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
@@ -27,7 +28,7 @@ import { LocalStrategy } from './strategies/local.strategy';
       }),
     }),
     UserModule,
-    LocalStrategy
+    ConfigModule.forFeature(jwtConfig),
   ],
 })
 export class AuthModule {}
