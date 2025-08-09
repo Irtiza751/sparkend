@@ -4,13 +4,17 @@
 NestJS REST API boilerplate for a trditional projects
 
 ## Features
-- Database MikroORM.
-- Databse Seeding.
-- Config Service (@nestjs/config).
-- Sign in and sign up via email.
-- Social sign in (Google) soon.
-- Admin and User roles.
-- Swagger documentaton.
+- [x] Database MikroORM.
+- [x] Databse Seeding.
+- [x] Config Service (@nestjs/config).
+- [x] Sign in and sign up via email.
+- [ ] Social sign in (Google) soon.
+- [x] Admin and User roles.
+- [ ] File upload (local & aws).
+- [ ] E2E and Unit test.
+- [ ] Dockerization.
+- [ ] CI,CD (Github actions).
+- [ ] Mailing (nodemailer with mailtrap or sendgrid).
 
 ### Additional documentation
 - [Setup guide](/docs/setup.md)
