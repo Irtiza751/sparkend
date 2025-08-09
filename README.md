@@ -12,5 +12,6 @@ NestJS REST API boilerplate for a trditional projects
 - Admin and User roles.
 - Swagger documentaton.
 
-[Setup guide](/docs/setup.md)
-[Architecture](/docs/architecture.md)
+### Additional documentation
+- [Setup guide](/docs/setup.md)
+- [Architecture](/docs/architecture.md)
