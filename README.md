@@ -13,3 +13,4 @@ NestJS REST API boilerplate for a trditional projects
 - Swagger documentaton.
 
 [Setup guide](/docs/setup.md)
+[Architecture](/docs/architecture.md)
