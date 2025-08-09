@@ -13,10 +13,11 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { Public } from '../decorators/public.decorator';
 import { SigninDto } from './dto/signin.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('/signup')
   @UseGuards(LocalAuthGuard)
@@ -33,6 +34,7 @@ export class AuthController {
   }
 
   @Get('/whoami')
+  @ApiBearerAuth('access-token')
   whoami() {
     return {
       user: 'Hi there!',

@@ -32,7 +32,14 @@ async function bootstrap() {
     .setTitle('NestJS API Boilerplate (Sparkend)')
     .setDescription('Complete NestJS API with authentication and file upload')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'jwt',
+      name: 'jwt',
+      description: 'Enter jwt token',
+      in: 'header',
+    }, 'access-token')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
