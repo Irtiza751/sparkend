@@ -23,12 +23,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
      * @description inject jwt config service to get secerets
      */
     @Inject(jwtConfig.KEY)
-    configService: ConfigType<typeof jwtConfig>,
+    jwtConfigService: ConfigType<typeof jwtConfig>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.jwtAccessSecret!,
+      secretOrKey: jwtConfigService.jwtAccessSecret!,
     });
   }
 

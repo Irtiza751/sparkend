@@ -18,7 +18,7 @@ export class UserSeeder extends Seeder {
         email: 'jane.doe@example.com',
         username: 'janedoe',
         password: 'password123',
-        roles: [context.adminRole, context.userRole],
+        roles: [context.userRole],
         provider: AuthProvider.LOCAL,
         isEmailVerified: false,
       },

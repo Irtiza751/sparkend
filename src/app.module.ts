@@ -11,7 +11,7 @@ import { RoleModule } from './role/role.module';
 import appConfig from './config/app.config';
 import validateEnv from './config/validate.env';
 import { APP_GUARD } from '@nestjs/core';
-import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -39,7 +39,7 @@ import { LocalAuthGuard } from './auth/guards/local-auth.guard';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: LocalAuthGuard,
+      useClass: JwtAuthGuard,
     },
   ],
 })
