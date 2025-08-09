@@ -25,10 +25,17 @@ export class AuthController {
     return this.authService.createUser(createUserDto);
   }
 
-  @Post('/sigin')
+  @Post('/signin')
   @UseGuards(LocalAuthGuard)
   @Public()
-  singIn(@Body() siginDto: SigninDto) {
+  signIn(@Body() siginDto: SigninDto) {
     return this.authService.signInUser(siginDto);
+  }
+
+  @Get('/whoami')
+  whoami() {
+    return {
+      user: 'Hi there!',
+    };
   }
 }
