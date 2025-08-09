@@ -1,5 +1,5 @@
 # Architecture
-
+```txt
 src/
 ├── config/            # Configuration files for global use
 ├── auth/              # auth module
@@ -14,3 +14,4 @@ src/
 ├── user/              # user module
 ├── migrations/        # Database migrations
 └── seeders/           # Database seeders
+```
