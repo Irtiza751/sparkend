@@ -10,7 +10,8 @@ NestJS REST API boilerplate for a trditional projects
 - [x] Databse Seeding.
 - [x] Config Service (@nestjs/config).
 - [x] Sign in and sign up via email.
-- [ ] Social sign in (Google) soon.
+- [ ] Refresh token
+- [ ] Social sign in (Google).
 - [x] Admin and User roles.
 - [ ] File upload (local & aws).
 - [ ] E2E and Unit test.
