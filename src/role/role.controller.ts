@@ -10,10 +10,12 @@ import {
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('role')
+@ApiBearerAuth('access-token')
 export class RoleController {
-  constructor(private readonly roleService: RoleService) {}
+  constructor(private readonly roleService: RoleService) { }
 
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
