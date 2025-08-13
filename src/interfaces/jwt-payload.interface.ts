@@ -11,4 +11,8 @@ export interface JwtPayload {
    * @description loggedin user username
    */
   username: string;
+  /**
+   * @description assigned roles of loggedin user
+   */
+  roles: string[];
 }

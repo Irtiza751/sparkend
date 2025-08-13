@@ -34,7 +34,7 @@ export class UserService {
      * @description The RoleProvider is used to interact with role data.
      */
     private readonly roleProvider: RoleProvider,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     let role: Role | null = null;
@@ -65,11 +65,11 @@ export class UserService {
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.userRepository.findAll();
   }
 
   findOne(id: string) {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOne(id, { populate: ['roles'] });
   }
 
   findByUsername(username: string) {
