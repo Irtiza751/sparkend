@@ -1,9 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import {
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SentMessageInfo } from 'nodemailer';
 
 @Injectable()

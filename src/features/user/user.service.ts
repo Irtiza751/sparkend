@@ -16,6 +16,7 @@ import {
 import { User } from './entities/user.entity';
 import { Role } from '../role/entities/role.entity';
 import { RoleProvider } from '@/features/role/providers/role-provider';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -33,6 +34,10 @@ export class UserService {
      * @description The RoleProvider is used to interact with role data.
      */
     private readonly roleProvider: RoleProvider,
+    /**
+     * @description mail service
+     */
+    private readonly mailService: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -51,6 +56,11 @@ export class UserService {
         roles: [role],
       });
       await this.em.persistAndFlush(user);
+      try {
+        await this.mailService.send({ email: user.email });
+      } catch (error) {
+        throw new InternalServerErrorException();
+      }
       return {
         message: 'User created successfully',
         user,
