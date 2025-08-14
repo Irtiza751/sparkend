@@ -1,6 +1,6 @@
-import { EntityRepository } from '@mikro-orm/core';
-import { InjectRepository } from '@mikro-orm/nestjs';
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+// import { EntityRepository } from '@mikro-orm/core';
+// import { InjectRepository } from '@mikro-orm/nestjs';
+import { Injectable } from '@nestjs/common';
 import { Role } from '../entities/role.entity';
 import { SqlEntityManager } from '@mikro-orm/postgresql';
 
@@ -10,8 +10,8 @@ export class RoleProvider {
     /**
      * @description Injecting the User repository to perform CRUD operations
      */
-    @InjectRepository(Role)
-    private readonly roleRepository: EntityRepository<Role>,
+    // @InjectRepository(Role)
+    // private readonly roleRepository: EntityRepository<Role>,
     /**
      * @description Injecting the EntityManager for advanced database operations
      */

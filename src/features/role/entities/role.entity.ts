@@ -6,8 +6,8 @@ import {
   ManyToMany,
   Property,
 } from '@mikro-orm/core';
-import { BaseEntity } from '../../../classes/base-entity';
-import { User } from '../../user/entities/user.entity';
+import { BaseEntity } from '@/classes/base-entity';
+import { User } from '@/features/user/entities/user.entity';
 
 @Entity()
 export class Role extends BaseEntity<'users'> {

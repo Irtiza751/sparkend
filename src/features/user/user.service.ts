@@ -11,12 +11,11 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import {
   EntityManager,
   EntityRepository,
-  RequiredEntityData,
   UniqueConstraintViolationException,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
 import { Role } from '../role/entities/role.entity';
-import { RoleProvider } from '../role/providers/role-provider';
+import { RoleProvider } from '@/features/role/providers/role-provider';
 
 @Injectable()
 export class UserService {
