@@ -1,17 +1,17 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { DatabaseConfig } from './config/database.config';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { RoleModule } from './role/role.module';
+import { AuthModule } from './features/auth/auth.module';
+import { JwtAuthGuard } from './features/auth/guards/jwt-auth.guard';
 import appConfig from './config/app.config';
+import { DatabaseConfig } from './config/database.config';
 import validateEnv from './config/validate.env';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RoleModule } from './features/role/role.module';
+import { UserModule } from './features/user/user.module';
 
 @Module({
   imports: [

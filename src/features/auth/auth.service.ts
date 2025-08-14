@@ -8,19 +8,19 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserProvider } from '../user/providers/user-provider';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UserService } from '../user/user.service';
+import { UserProvider } from '../../features/user/providers/user-provider';
+import { CreateUserDto } from '../../features/user/dto/create-user.dto';
+import { UserService } from '../../features/user/user.service';
 import * as bcrypt from 'bcryptjs';
 import { SigninDto } from './dto/signin.dto';
-import { Validator } from '../utils/validator';
-import { User } from '../user/entities/user.entity';
+import { Validator } from '../../utils/validator';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshDto } from './dto/refresh.dto';
-import { JwtResponse } from '../interfaces/jwt-response.interface';
-import { JwtPayload } from '../interfaces/jwt-payload.interface';
-import { GeneratedTokens } from '../interfaces/generated-tokens.interface';
+import { JwtResponse } from '../../interfaces/jwt-response.interface';
+import { JwtPayload } from '../../interfaces/jwt-payload.interface';
+import { GeneratedTokens } from '../../interfaces/generated-tokens.interface';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class AuthService {

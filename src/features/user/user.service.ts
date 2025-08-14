@@ -15,8 +15,8 @@ import {
   UniqueConstraintViolationException,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
-import { Role } from '../role/entities/role.entity';
-import { RoleProvider } from '../role/providers/role-provider';
+import { Role } from '../features/role/entities/role.entity';
+import { RoleProvider } from '../features/role/providers/role-provider';
 
 @Injectable()
 export class UserService {
@@ -34,7 +34,7 @@ export class UserService {
      * @description The RoleProvider is used to interact with role data.
      */
     private readonly roleProvider: RoleProvider,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     let role: Role | null = null;

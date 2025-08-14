@@ -1,6 +1,6 @@
 import type { Dictionary, EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { Role } from '../role/entities/role.entity';
+import { Role } from '../features/role/entities/role.entity';
 
 export class RoleSeeder extends Seeder {
   async run(em: EntityManager, context: Dictionary): Promise<void> {

@@ -11,7 +11,7 @@ import {
 import { AuthProvider } from '../enums/auth-provider';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcryptjs';
-import { BaseEntity } from '../../classes/base-entity';
+import { BaseEntity } from '../../../classes/base-entity';
 import { Role } from '../../role/entities/role.entity';
 
 @Entity()
