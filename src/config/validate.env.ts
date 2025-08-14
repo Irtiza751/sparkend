@@ -19,4 +19,11 @@ export default Joi.object({
   JWT_AUDIENCE: Joi.string().required(),
   JWT_ACCESS_TTL: Joi.string().required(),
   JWT_REFRESH_TTL: Joi.string().required(),
+  // mail config
+  MAIL_HOST: Joi.string().required(),
+  MAIL_PORT: Joi.number().optional().default(587),
+  MAIL_SECURE: Joi.boolean().optional().default(false),
+  MAIL_USER: Joi.string().required(),
+  MAIL_PASS: Joi.string().required(),
+  MAIL_FROM: Joi.string().optional().default('<noreply@you-app.com>'),
 });

@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   RequestTimeoutException,
   UnauthorizedException,
@@ -19,6 +20,7 @@ import { JwtResponse } from '@/interfaces/jwt-response.interface';
 import { JwtPayload } from '@/interfaces/jwt-payload.interface';
 import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
 import { User } from '../user/entities/user.entity';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -36,6 +38,10 @@ export class AuthService {
      */
     @Inject(jwtConfig.KEY)
     private readonly jwtConfigService: ConfigType<typeof jwtConfig>,
+    /**
+     * @description mail service
+     */
+    private readonly mailService: MailService,
   ) {}
 
   createUser(createUserDto: CreateUserDto) {
@@ -80,7 +86,11 @@ export class AuthService {
       );
 
       const { accessToken, refreshToken } = await this.generateTokens(user);
-
+      try {
+        await this.mailService.send({ email: user.email });
+      } catch (error) {
+        throw new InternalServerErrorException();
+      }
       return {
         user,
         accessToken,

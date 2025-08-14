@@ -20,7 +20,7 @@ NestJS REST API boilerplate for a trditional projects
 - [ ] E2E and Unit test.
 - [ ] Dockerization.
 - [ ] CI,CD (Github actions).
-- [ ] Mailing (nodemailer with mailtrap or sendgrid).
+- [x] Mailing (nodemailer with mailtrap or sendgrid).
 
 ### Additional documentation
 

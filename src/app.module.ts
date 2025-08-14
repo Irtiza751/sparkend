@@ -12,6 +12,7 @@ import { DatabaseConfig } from './config/database.config';
 import validateEnv from './config/validate.env';
 import { RoleModule } from './features/role/role.module';
 import { UserModule } from './features/user/user.module';
+import { MailModule } from './features/mail/mail.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserModule } from './features/user/user.module';
     AuthModule,
     UserModule,
     RoleModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [
