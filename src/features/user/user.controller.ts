@@ -13,13 +13,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { RoleGuard } from '../role/guards/role.guard';
-import { Roles } from '../decorators/roles.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { UserRoles } from '../role/enums/user-role.enum';
 
 @Controller('user')
 @ApiBearerAuth('access-token')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

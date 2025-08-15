@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { AuthProvider } from '../enums/auth-provider';
-import { UserRoles } from '../../role/enums/user-role.enum';
+import { UserRoles } from '@/features/role/enums/user-role.enum';
 import {
   IsEmail,
   IsEnum,
