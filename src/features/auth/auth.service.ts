@@ -52,14 +52,9 @@ export class AuthService {
   async createUser(createUserDto: CreateUserDto) {
     const { user } = await this.userService.create(createUserDto);
     if (user) {
-      const token = await this.jwtService.signAsync(
-        {
-          sub: user.id,
-        },
-        {
-          secret: this.jwtConfigService.jwtVerificationSecret,
-          expiresIn: '5m',
-        },
+      const token = await this.generateVerificationToken(
+        { sub: user.id },
+        '1d',
       );
       try {
         await this.mailService.sendConfirmation({
@@ -162,7 +157,7 @@ export class AuthService {
       throw new NotFoundException(`User with email "${email} not found"`);
     }
 
-    const token = await this.generateVerificationToken({ sub: user.id }, '24h');
+    const token = await this.generateVerificationToken({ sub: user.id }, '1d');
     const endpoint = `/reset-password/${token}`;
 
     this.mailService.sendResetEmail({

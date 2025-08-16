@@ -58,6 +58,7 @@ export class AuthController {
   }
 
   @Get('/verify-email/:token')
+  @ApiBearerAuth('access-token')
   verifyUser(@Param('token') token: string) {
     // return req.user;
     return this.authService.verifyUserEmail(token);

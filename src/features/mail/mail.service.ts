@@ -34,6 +34,7 @@ export class MailService {
         name: mailOptions.name,
         confirmationLink: url,
         appName: this.configService.appName,
+        year: new Date().getFullYear(),
       },
     });
   }
