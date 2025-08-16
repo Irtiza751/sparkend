@@ -6,6 +6,7 @@ export default Joi.object({
     .valid('development', 'production', 'test', 'provision')
     .default('development'),
   PORT: Joi.number().default(4000),
+  FRONTEND_URL: Joi.string().required(),
   // database configs
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().default(5432),

@@ -12,6 +12,7 @@ import {
   EntityManager,
   EntityRepository,
   UniqueConstraintViolationException,
+  wrap,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
 import { Role } from '../role/entities/role.entity';
@@ -57,7 +58,11 @@ export class UserService {
       });
       await this.em.persistAndFlush(user);
       try {
-        await this.mailService.send({ email: user.email });
+        await this.mailService.sendConfirmation({
+          toEmail: user.email,
+          name: user.username,
+          confirmationLink: '/confirmation',
+        });
       } catch (error) {
         throw new InternalServerErrorException();
       }
@@ -89,8 +94,22 @@ export class UserService {
     return this.userRepository.findOne({ email }, { populate: ['roles'] });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.findOne(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    wrap(user).assign(updateUserDto);
+    return await this.em.persistAndFlush(User);
+  }
+
+  async markUserAsVerified(id: string) {
+    const user = await this.findOne(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    user.vefified = true;
+    return this.em.flush();
   }
 
   remove(id: string) {
