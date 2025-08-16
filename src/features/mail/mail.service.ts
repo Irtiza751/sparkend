@@ -23,9 +23,8 @@ export class MailService {
   async sendConfirmation(
     mailOptions: ConfirmationOptions,
   ): Promise<SentMessageInfo> {
-    const { frontendUrl } = this.configService;
     const { endpoint } = mailOptions;
-    const url = `${frontendUrl}${endpoint}`;
+    const url = this.getUrl(endpoint);
 
     return this.mailerService.sendMail({
       to: mailOptions.toEmail,
@@ -40,14 +39,24 @@ export class MailService {
   }
 
   sendResetEmail(mailOptions: ResetMailOptions) {
+    const { endpoint } = mailOptions;
+    const url = this.getUrl(endpoint);
+
     return this.mailerService.sendMail({
       to: mailOptions.toEmail,
       subject: 'Test subject for email',
       template: './forgot-password',
       context: {
         name: mailOptions.name,
-        resetLink: mailOptions.restLink,
+        resetLink: url,
+        appName: this.configService.appName,
+        year: new Date().getFullYear(),
       },
     });
+  }
+
+  getUrl(endpoint: string) {
+    const { frontendUrl } = this.configService;
+    return `${frontendUrl}${endpoint}`;
   }
 }

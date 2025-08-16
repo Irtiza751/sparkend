@@ -92,7 +92,7 @@ export class UserService {
       throw new NotFoundException();
     }
     wrap(user).assign(updateUserDto);
-    return await this.em.persistAndFlush(User);
+    return await this.em.flush();
   }
 
   async markUserAsVerified(id: string) {
@@ -100,7 +100,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException();
     }
-    user.vefified = true;
+    user.verified = true;
     return this.em.flush();
   }
 

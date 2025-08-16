@@ -17,6 +17,7 @@ import { RefreshDto } from './dto/refresh.dto';
 import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { AuthReqUser } from '../../interfaces/auth-req-user';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -47,11 +48,19 @@ export class AuthController {
     return this.authService.forgotPassword(forgotPasswordDto);
   }
 
-  @Get('/verify-email/:token')
+  @Post('/reset-password/:token')
   @Public()
+  resetPassword(
+    @Param('token') token: string,
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ) {
+    return this.authService.resetPassword(token, resetPasswordDto);
+  }
+
+  @Get('/verify-email/:token')
   verifyUser(@Param('token') token: string) {
     // return req.user;
-    return this.authService.verifyUser(token);
+    return this.authService.verifyUserEmail(token);
   }
 
   @Get('/whoami')
