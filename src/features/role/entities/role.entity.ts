@@ -9,7 +9,7 @@ import {
 import { BaseEntity } from '@/classes/base-entity';
 import { User } from '@/features/user/entities/user.entity';
 
-@Entity()
+@Entity({ tableName: 'roles' })
 export class Role extends BaseEntity<'users'> {
   @Property({ unique: true })
   name: string;

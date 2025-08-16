@@ -13,7 +13,7 @@ NestJS REST API boilerplate for a trditional projects
 - [x] Config Service (@nestjs/config).
 - [x] Sign in and sign up via email.
 - [x] Refresh token
-- [ ] password reset / forget
+- [x] password reset / forget
 - [ ] Social sign in (Google).
 - [x] Admin and User roles.
 - [ ] File upload (local & aws).

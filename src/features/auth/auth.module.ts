@@ -9,6 +9,7 @@ import jwtConfig from './config/jwt.config';
 import { UserModule } from '../../features/user/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   controllers: [AuthController, GoogleController],
@@ -29,6 +30,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
     UserModule,
     ConfigModule.forFeature(jwtConfig),
+    MailModule,
   ],
 })
 export class AuthModule {}

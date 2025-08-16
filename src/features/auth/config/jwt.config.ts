@@ -7,4 +7,5 @@ export default registerAs('jwtCofnig', () => ({
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_TTL,
   jwtIssuer: process.env.JWT_ISSUER,
   jwtAudience: process.env.JWT_AUDIENCE,
+  jwtVerificationSecret: process.env.JWT_VERIFICATION_SECRET,
 }));

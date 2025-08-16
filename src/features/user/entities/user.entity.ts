@@ -14,7 +14,7 @@ import * as bcrypt from 'bcryptjs';
 import { BaseEntity } from '@/classes/base-entity';
 import { Role } from '@/features/role/entities/role.entity';
 
-@Entity()
+@Entity({ tableName: 'users' })
 export class User extends BaseEntity<'roles'> {
   @Property()
   @Unique()
@@ -44,7 +44,7 @@ export class User extends BaseEntity<'roles'> {
 
   @Property({ type: 'boolean', nullable: true, default: false })
   @ApiProperty({ example: false })
-  vefified?: boolean;
+  verified?: boolean;
 
   @Property({ nullable: true })
   @ApiProperty({ example: 'profile-picture.jpg' })
