@@ -34,6 +34,7 @@ export class MailService {
       context: {
         name: mailOptions.name,
         confirmationLink: url,
+        appName: this.configService.appName,
       },
     });
   }

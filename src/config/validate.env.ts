@@ -7,6 +7,7 @@ export default Joi.object({
     .default('development'),
   PORT: Joi.number().default(4000),
   FRONTEND_URL: Joi.string().required(),
+  APP_NAME: Joi.string().optional().default('Sparkend'),
   // database configs
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().default(5432),
