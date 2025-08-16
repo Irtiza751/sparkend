@@ -3,11 +3,12 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   RequestTimeoutException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JsonWebTokenError, JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '@/features/user/dto/create-user.dto';
 import { UserService } from '@/features/user/user.service';
 import * as bcrypt from 'bcryptjs';
@@ -20,6 +21,9 @@ import { JwtResponse } from '@/interfaces/jwt-response.interface';
 import { JwtPayload } from '@/interfaces/jwt-payload.interface';
 import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
 import { User } from '../user/entities/user.entity';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { MailService } from '../mail/mail.service';
+import { JwtVerification } from '@/interfaces/jwt-verification.interface';
 
 @Injectable()
 export class AuthService {
@@ -37,10 +41,35 @@ export class AuthService {
      */
     @Inject(jwtConfig.KEY)
     private readonly jwtConfigService: ConfigType<typeof jwtConfig>,
+    /**
+     * @description mail service
+     */
+    private readonly mailService: MailService,
   ) {}
 
-  createUser(createUserDto: CreateUserDto) {
-    return this.userSevice.create(createUserDto);
+  async createUser(createUserDto: CreateUserDto) {
+    const { user } = await this.userSevice.create(createUserDto);
+    if (user) {
+      const token = await this.jwtService.signAsync(
+        {
+          sub: user.id,
+        },
+        {
+          secret: this.jwtConfigService.jwtVerificationSecret,
+          expiresIn: '5m',
+        },
+      );
+      try {
+        await this.mailService.sendConfirmation({
+          toEmail: user.email,
+          name: user.username,
+          endpoint: `/verify-email/${token}`,
+        });
+      } catch (error) {
+        throw new InternalServerErrorException();
+      }
+      return user;
+    }
   }
 
   async validateUser(username: string, password: string): Promise<JwtPayload> {
@@ -120,6 +149,47 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
+    const { email } = forgotPasswordDto;
+    const user = await this.userSevice.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException(`User with email "${email} not found"`);
+    }
+    this.mailService.sendResetEmail({
+      toEmail: user.email,
+      name: user.username,
+      restLink: '#',
+    });
+  }
+
+  async verifyUser(token: string) {
+    try {
+      const payload = await this.jwtService.verifyAsync<JwtVerification>(
+        token,
+        {
+          secret: this.jwtConfigService.jwtVerificationSecret,
+        },
+      );
+
+      Logger.log(payload);
+
+      if (!payload) {
+        throw new BadRequestException('invalid verification token');
+      }
+
+      await this.userSevice.markUserAsVerified(payload.sub);
+      return {
+        message: 'User verified successfully',
+      };
+    } catch (error) {
+      Logger.log(error.message, 'verify user');
+      if (error instanceof JsonWebTokenError) {
+        throw new BadRequestException(error.message); // for debugging
+      }
+      throw new BadRequestException();
+    }
   }
 
   findById(id: string) {

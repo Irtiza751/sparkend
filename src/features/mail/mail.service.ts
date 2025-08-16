@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { SentMessageInfo } from 'nodemailer';
 import { ResetMailOptions } from './interfaces/reset-mail-options.interface';
 import { ConfirmationOptions } from './interfaces/confirmation-options.interface';
-import appConfig from '../../config/app.config';
+import appConfig from '@/config/app.config';
 import { ConfigType } from '@nestjs/config';
 
 @Injectable()
@@ -20,16 +20,20 @@ export class MailService {
     private readonly configService: ConfigType<typeof appConfig>,
   ) {}
 
-  sendConfirmation(mailOptions: ConfirmationOptions): Promise<SentMessageInfo> {
-    const confirmationUrl =
-      this.configService.frontendUrl + mailOptions.confirmationLink;
+  async sendConfirmation(
+    mailOptions: ConfirmationOptions,
+  ): Promise<SentMessageInfo> {
+    const { frontendUrl } = this.configService;
+    const { endpoint } = mailOptions;
+    const url = `${frontendUrl}${endpoint}`;
+
     return this.mailerService.sendMail({
       to: mailOptions.toEmail,
       subject: 'Test subject for email',
       template: './confirmation',
       context: {
         name: mailOptions.name,
-        confirmationLink: confirmationUrl,
+        confirmationLink: url,
       },
     });
   }

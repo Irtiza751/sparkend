@@ -6,6 +6,10 @@ import { ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
 import { JwtPayload } from '@/interfaces/jwt-payload.interface';
 
+/**
+ * @description
+ * The JWT strategy is used to validate jwt tokens
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(

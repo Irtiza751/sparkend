@@ -95,8 +95,8 @@ export class UserService {
     return await this.em.persistAndFlush(User);
   }
 
-  async markUserAsVerified(email: string) {
-    const user = await this.findByEmail(email);
+  async markUserAsVerified(id: string) {
+    const user = await this.findOne(id);
     if (!user) {
       throw new NotFoundException();
     }

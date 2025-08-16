@@ -23,7 +23,6 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
-  @UseGuards(LocalAuthGuard)
   @Public()
   signUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.createUser(createUserDto);
