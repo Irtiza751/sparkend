@@ -20,6 +20,7 @@ export default Joi.object({
   JWT_AUDIENCE: Joi.string().required(),
   JWT_ACCESS_TTL: Joi.string().required(),
   JWT_REFRESH_TTL: Joi.string().required(),
+  JWT_VERIFICATION_SECRET: Joi.string().required(),
   // mail config
   MAIL_HOST: Joi.string().required(),
   MAIL_PORT: Joi.number().optional().default(587),

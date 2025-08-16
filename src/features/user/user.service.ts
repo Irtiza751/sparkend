@@ -17,7 +17,7 @@ import {
 import { User } from './entities/user.entity';
 import { Role } from '../role/entities/role.entity';
 import { RoleProvider } from '@/features/role/providers/role-provider';
-import { MailService } from '../mail/mail.service';
+// import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -38,7 +38,7 @@ export class UserService {
     /**
      * @description mail service
      */
-    private readonly mailService: MailService,
+    // private readonly mailService: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -57,15 +57,7 @@ export class UserService {
         roles: [role],
       });
       await this.em.persistAndFlush(user);
-      try {
-        await this.mailService.sendConfirmation({
-          toEmail: user.email,
-          name: user.username,
-          confirmationLink: '/confirmation',
-        });
-      } catch (error) {
-        throw new InternalServerErrorException();
-      }
+
       return {
         message: 'User created successfully',
         user,
@@ -103,8 +95,8 @@ export class UserService {
     return await this.em.persistAndFlush(User);
   }
 
-  async markUserAsVerified(id: string) {
-    const user = await this.findOne(id);
+  async markUserAsVerified(email: string) {
+    const user = await this.findByEmail(email);
     if (!user) {
       throw new NotFoundException();
     }
