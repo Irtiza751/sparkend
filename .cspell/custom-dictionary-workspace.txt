@@ -1,0 +1,6 @@
+# Custom Dictionary Words
+timestamptz
+sparkend
+MikroORM
+Irtiza
+mikro
