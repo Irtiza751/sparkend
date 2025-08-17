@@ -11,7 +11,7 @@ import { JwtPayload } from '@/interfaces/jwt-payload.interface';
  * The JWT strategy is used to validate jwt tokens
  */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     /**
      * @description inject auth service to validate the user
