@@ -82,7 +82,7 @@ export class AuthService {
     } catch (error) {
       throw new BadRequestException();
     }
-    if (!user) {
+    if (!user || !user.password) {
       throw new NotFoundException('User does not exist');
     }
     // validate the user password
