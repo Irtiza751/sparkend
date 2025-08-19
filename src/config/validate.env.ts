@@ -6,6 +6,8 @@ export default Joi.object({
     .valid('development', 'production', 'test', 'provision')
     .default('development'),
   PORT: Joi.number().default(4000),
+  FRONTEND_URL: Joi.string().required(),
+  APP_NAME: Joi.string().optional().default('Sparkend'),
   // database configs
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().default(5432),
@@ -19,6 +21,7 @@ export default Joi.object({
   JWT_AUDIENCE: Joi.string().required(),
   JWT_ACCESS_TTL: Joi.string().required(),
   JWT_REFRESH_TTL: Joi.string().required(),
+  JWT_VERIFICATION_SECRET: Joi.string().required(),
   // mail config
   MAIL_HOST: Joi.string().required(),
   MAIL_PORT: Joi.number().optional().default(587),

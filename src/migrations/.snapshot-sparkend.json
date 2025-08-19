@@ -46,7 +46,7 @@
           "mappedType": "string"
         }
       },
-      "name": "role",
+      "name": "roles",
       "schema": "public",
       "indexes": [
         {
@@ -54,13 +54,13 @@
             "name"
           ],
           "composite": false,
-          "keyName": "role_name_unique",
+          "keyName": "roles_name_unique",
           "constraint": true,
           "primary": false,
           "unique": true
         },
         {
-          "keyName": "role_pkey",
+          "keyName": "roles_pkey",
           "columnNames": [
             "id"
           ],
@@ -158,8 +158,8 @@
           "length": 255,
           "mappedType": "string"
         },
-        "vefified": {
-          "name": "vefified",
+        "verified": {
+          "name": "verified",
           "type": "boolean",
           "unsigned": false,
           "autoincrement": false,
@@ -189,7 +189,7 @@
           "mappedType": "boolean"
         }
       },
-      "name": "user",
+      "name": "users",
       "schema": "public",
       "indexes": [
         {
@@ -197,7 +197,7 @@
             "username"
           ],
           "composite": false,
-          "keyName": "user_username_unique",
+          "keyName": "users_username_unique",
           "constraint": true,
           "primary": false,
           "unique": true
@@ -207,13 +207,13 @@
             "email"
           ],
           "composite": false,
-          "keyName": "user_email_unique",
+          "keyName": "users_email_unique",
           "constraint": true,
           "primary": false,
           "unique": true
         },
         {
-          "keyName": "user_pkey",
+          "keyName": "users_pkey",
           "columnNames": [
             "id"
           ],
@@ -248,11 +248,11 @@
           "mappedType": "uuid"
         }
       },
-      "name": "user_roles",
+      "name": "users_roles",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "user_roles_pkey",
+          "keyName": "users_roles_pkey",
           "columnNames": [
             "user_id",
             "role_id"
@@ -265,29 +265,29 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "user_roles_user_id_foreign": {
-          "constraintName": "user_roles_user_id_foreign",
+        "users_roles_user_id_foreign": {
+          "constraintName": "users_roles_user_id_foreign",
           "columnNames": [
             "user_id"
           ],
-          "localTableName": "public.user_roles",
+          "localTableName": "public.users_roles",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.user",
+          "referencedTableName": "public.users",
           "deleteRule": "cascade",
           "updateRule": "cascade"
         },
-        "user_roles_role_id_foreign": {
-          "constraintName": "user_roles_role_id_foreign",
+        "users_roles_role_id_foreign": {
+          "constraintName": "users_roles_role_id_foreign",
           "columnNames": [
             "role_id"
           ],
-          "localTableName": "public.user_roles",
+          "localTableName": "public.users_roles",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.role",
+          "referencedTableName": "public.roles",
           "deleteRule": "cascade",
           "updateRule": "cascade"
         }

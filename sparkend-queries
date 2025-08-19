@@ -1,8 +1,1 @@
-SELECT * FROM public."user"
-ORDER BY id ASC 
-
--- DELETE FROM public."user";
--- DELETE FROM public."role";
--- DELETE FROM public."user_roles";
-
-SELECT * FROM public."user_roles";
+select * from "users";

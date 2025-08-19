@@ -3,6 +3,7 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   RequestTimeoutException,
   UnauthorizedException,
@@ -20,6 +21,11 @@ import { JwtResponse } from '@/interfaces/jwt-response.interface';
 import { JwtPayload } from '@/interfaces/jwt-payload.interface';
 import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
 import { User } from '../user/entities/user.entity';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { MailService } from '../mail/mail.service';
+import { JwtVerification } from '@/interfaces/jwt-verification.interface';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { BaseResponse } from '@/interfaces/base-response';
 
 @Injectable()
 export class AuthService {
@@ -31,16 +37,36 @@ export class AuthService {
     /**
      * @description The UserProvider is used to interact with user data.
      */
-    private readonly userSevice: UserService,
+    private readonly userService: UserService,
     /**
-     * @description jwt config service to access jwt enviroment variables
+     * @description jwt config service to access jwt environment variables
      */
     @Inject(jwtConfig.KEY)
     private readonly jwtConfigService: ConfigType<typeof jwtConfig>,
+    /**
+     * @description mail service
+     */
+    private readonly mailService: MailService,
   ) {}
 
-  createUser(createUserDto: CreateUserDto) {
-    return this.userSevice.create(createUserDto);
+  async createUser(createUserDto: CreateUserDto) {
+    const { user } = await this.userService.create(createUserDto);
+    if (user) {
+      const token = await this.generateVerificationToken(
+        { sub: user.id },
+        '1d',
+      );
+      try {
+        await this.mailService.sendConfirmation({
+          toEmail: user.email,
+          name: user.username,
+          endpoint: `/verify-email/${token}`,
+        });
+      } catch (error) {
+        throw new InternalServerErrorException();
+      }
+      return user;
+    }
   }
 
   async validateUser(username: string, password: string): Promise<JwtPayload> {
@@ -49,9 +75,9 @@ export class AuthService {
     const isEmail = Validator.isEmail(username);
     try {
       if (isEmail) {
-        user = await this.userSevice.findByEmail(username);
+        user = await this.userService.findByEmail(username);
       } else {
-        user = await this.userSevice.findByUsername(username);
+        user = await this.userService.findByUsername(username);
       }
     } catch (error) {
       throw new BadRequestException();
@@ -122,7 +148,90 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
+  async forgotPassword(
+    forgotPasswordDto: ForgotPasswordDto,
+  ): Promise<BaseResponse> {
+    const { email } = forgotPasswordDto;
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException(`User with email "${email} not found"`);
+    }
+
+    const token = await this.generateVerificationToken({ sub: user.id }, '1d');
+    const endpoint = `/reset-password/${token}`;
+
+    this.mailService.sendResetEmail({
+      toEmail: user.email,
+      name: user.username,
+      endpoint,
+    });
+
+    return {
+      message: 'we have sent you an email',
+    };
+  }
+
+  async verifyUserEmail(token: string) {
+    try {
+      const payload = await this.jwtService.verifyAsync<JwtVerification>(
+        token,
+        {
+          secret: this.jwtConfigService.jwtVerificationSecret,
+        },
+      );
+
+      Logger.log(payload);
+
+      if (!payload) {
+        throw new BadRequestException('invalid verification token');
+      }
+
+      await this.userService.markUserAsVerified(payload.sub);
+      return {
+        message: 'User verified successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(error.message); // for debugging
+    }
+  }
+
+  async resetPassword(
+    token: string,
+    resetPasswordDto: ResetPasswordDto,
+  ): Promise<BaseResponse> {
+    try {
+      const payload = await this.jwtService.verifyAsync<JwtVerification>(
+        token,
+        {
+          secret: this.jwtConfigService.jwtVerificationSecret,
+        },
+      );
+
+      Logger.log(payload);
+
+      if (!payload) {
+        throw new BadRequestException('invalid verification token');
+      }
+      await this.userService.update(payload.sub, resetPasswordDto);
+      return {
+        message: 'Password updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(error.message); // for debugging
+    }
+  }
+
   findById(id: string) {
-    return this.userSevice.findOne(id);
+    return this.userService.findOne(id);
+  }
+
+  async generateVerificationToken(
+    payload: Record<string, any>,
+    expiryTime?: string,
+  ): Promise<string> {
+    return await this.jwtService.signAsync(payload, {
+      secret: this.jwtConfigService.jwtVerificationSecret,
+      expiresIn: expiryTime,
+    });
   }
 }
