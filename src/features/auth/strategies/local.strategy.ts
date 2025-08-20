@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
  * The local strategy is used to validate user credentials
  */
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   constructor(private readonly authService: AuthService) {
     super();
   }

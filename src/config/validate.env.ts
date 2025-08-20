@@ -22,11 +22,15 @@ export default Joi.object({
   JWT_ACCESS_TTL: Joi.string().required(),
   JWT_REFRESH_TTL: Joi.string().required(),
   JWT_VERIFICATION_SECRET: Joi.string().required(),
+  // social signin config
+  GOOGLE_CLIENT_ID: Joi.string().optional().default('your-client-id'),
+  GOOGLE_CLIENT_SECRET: Joi.string().optional().default('your-client-secret'),
+  GOOGLE_CALLBACK_URL: Joi.string().optional().default('your-callback-url'),
   // mail config
   MAIL_HOST: Joi.string().required(),
   MAIL_PORT: Joi.number().optional().default(587),
   MAIL_SECURE: Joi.boolean().optional().default(false),
   MAIL_USER: Joi.string().required(),
   MAIL_PASS: Joi.string().required(),
-  MAIL_FROM: Joi.string().optional().default('<noreply@you-app.com>'),
+  MAIL_FROM: Joi.string().optional().default('<noreply@your-app.com>'),
 });
