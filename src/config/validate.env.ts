@@ -33,4 +33,12 @@ export default Joi.object({
   MAIL_USER: Joi.string().required(),
   MAIL_PASS: Joi.string().required(),
   MAIL_FROM: Joi.string().optional().default('<noreply@your-app.com>'),
+  // disk storage config
+  DISK_UPLOAD_PATH: Joi.string().optional().default('./uploads'),
+  DISK_BASE_URL: Joi.string().optional().default('http://localhost:4000/files'),
+  // s3 storage config
+  AWS_REGION: Joi.string().optional().default('us-east-1'),
+  AWS_ACCESS_KEY_ID: Joi.string().optional().allow(''),
+  AWS_SECRET_ACCESS_KEY: Joi.string().optional().allow(''),
+  AWS_S3_BUCKET: Joi.string().optional().allow(''),
 });

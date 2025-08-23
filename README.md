@@ -17,7 +17,7 @@ NestJS REST API boilerplate for a traditional projects
 - [x] Social sign in (Google).
 - [x] Admin and User roles.
 - [x] Mailing (mailtrap).
-- [ ] File upload (local & aws).
+- [x] File upload (local & aws).
 - [ ] E2E and Unit test.
 - [ ] Dockerization.
 - [ ] CI,CD (Github actions).

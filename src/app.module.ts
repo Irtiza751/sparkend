@@ -13,6 +13,8 @@ import validateEnv from './config/validate.env';
 import { UserModule } from './features/user/user.module';
 import { MailModule } from './features/mail/mail.module';
 import { CommonModule } from './common/common.module';
+import { StorageModule } from './core/storage.module';
+import { StorageModule } from './core/storage/storage.module';
 
 @Module({
   imports: [
@@ -35,6 +37,7 @@ import { CommonModule } from './common/common.module';
     UserModule,
     MailModule,
     CommonModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [
