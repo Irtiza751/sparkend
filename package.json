@@ -21,6 +21,7 @@
     "migration:create": "mikro-orm migration:create",
     "migration:up": "mikro-orm migration:up",
     "migration:down": "mikro-orm migration:down",
+    "schema:update": "npx mikro-orm schema:update --run",
     "seeder:create": "mikro-orm seeder:create",
     "seeder:run": "mikro-orm seeder:run"
   },

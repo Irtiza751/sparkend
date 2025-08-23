@@ -15,8 +15,6 @@ import {
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { SocialUser } from '@/interfaces/social-user';
-import { RoleProvider } from '@/features/role/providers/role-provider';
-import { Role } from '@/features/role/entities/role.entity';
 
 @Injectable()
 export class UserProvider {
@@ -30,27 +28,11 @@ export class UserProvider {
      * @description Injecting the EntityManager for advanced database operations
      */
     private readonly em: EntityManager,
-    /**
-     * @description The RoleProvider is used to interact with role data.
-     */
-    private readonly roleProvider: RoleProvider,
   ) {}
 
   async createSocialUser(user: SocialUser) {
-    let role: Role | null = null;
     try {
-      role = await this.roleProvider.findByName(user.role);
-    } catch (error) {
-      throw new RequestTimeoutException();
-    }
-    if (!role) {
-      throw new NotFoundException(`Role ${user.role} does not exist.`);
-    }
-    try {
-      const socialUser = this.userRepository.create({
-        ...user,
-        roles: [role],
-      });
+      const socialUser = this.userRepository.create(user);
       await this.em.persistAndFlush(socialUser);
 
       return {

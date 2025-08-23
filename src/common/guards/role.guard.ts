@@ -17,19 +17,19 @@ export class RoleGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const roles = this.reflector.getAllAndOverride<string[]>('roles', [
+    const role = this.reflector.getAllAndOverride<string>('role', [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (!roles || roles.length <= 0) {
+    if (!role) {
       throw new ForbiddenException();
     }
 
     const user = context.switchToHttp().getRequest().user as JwtPayload;
-    Logger.log(user, roles);
+    Logger.log(user, role);
     if (!user) throw new UnauthorizedException();
 
-    return user.roles.some((role) => roles.includes(role));
+    return user.role === role;
   }
 }

@@ -4,7 +4,7 @@
 
 ## Description
 
-NestJS REST API boilerplate for a trditional projects
+NestJS REST API boilerplate for a traditional projects
 
 ## Features
 
