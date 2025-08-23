@@ -15,6 +15,8 @@ import { MailModule } from './features/mail/mail.module';
 import { CommonModule } from './common/common.module';
 import { StorageModule } from './core/storage/storage.module';
 import { StorageType } from './core/storage/enums/storage-type';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -39,6 +41,14 @@ import { StorageType } from './core/storage/enums/storage-type';
     CommonModule,
     StorageModule.forRoot({
       type: StorageType.DISK,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'),
+      serveRoot: '/uploads',
+      serveStaticOptions: {
+        index: false,
+        dotfiles: 'deny',
+      },
     }),
   ],
   controllers: [AppController],
