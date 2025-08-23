@@ -9,7 +9,7 @@ export class UserSeeder extends Seeder {
     const users = [
       {
         email: 'john.doe@example.com',
-        username: 'John Done',
+        username: 'johndoe',
         password: 'password123',
         // roles: [context.adminRole, context.userRole],
         role: Roles.ADMIN,
@@ -18,7 +18,7 @@ export class UserSeeder extends Seeder {
       },
       {
         email: 'jane.doe@example.com',
-        username: 'Jane Doe',
+        username: 'janedoe',
         password: 'password123',
         // roles: [context.userRole],
         role: Roles.USER,
