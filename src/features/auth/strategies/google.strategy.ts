@@ -5,8 +5,8 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { GoogleProvider } from '../provider/google-provider';
 import { AuthProvider } from '@/features/user/enums/auth-provider';
-import { SocialUser } from '../../../interfaces/social-user';
-import { UserRoles } from '../../role/enums/user-role.enum';
+import { SocialUser } from '@/interfaces/social-user';
+import { Roles } from '@/enums/roles.enum';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -45,7 +45,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       username: profile.username || '',
       avatar: profile.photos?.[0]?.value || '',
       verified: profile.emails?.[0]?.verified || false,
-      role: UserRoles.USER,
+      role: Roles.USER,
       accessToken,
     };
     // this will add the user in the request object.

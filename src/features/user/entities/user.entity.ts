@@ -12,7 +12,7 @@ import { AuthProvider } from '../enums/auth-provider';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcryptjs';
 import { BaseEntity } from '@/classes/base-entity';
-import { Role } from '@/features/role/entities/role.entity';
+import { Roles } from '@/enums/roles.enum';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntity<'roles'> {
@@ -29,10 +29,9 @@ export class User extends BaseEntity<'roles'> {
   @Property({ hidden: true, nullable: true })
   password?: string;
 
-  // @Enum(() => UserRole)
-  // @ApiProperty({ enum: UserRole, example: UserRole.USER })
-  @ManyToMany(() => Role, (role) => role.users, { owner: true })
-  roles = new Collection<Role>(this);
+  @Enum(() => Roles)
+  @ApiProperty({ enum: Roles, example: Roles.USER })
+  role: Roles = Roles.USER;
 
   @Enum(() => AuthProvider)
   @ApiProperty({ enum: AuthProvider, example: AuthProvider.LOCAL })

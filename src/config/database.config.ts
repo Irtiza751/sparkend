@@ -11,6 +11,8 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
 
   createMikroOrmOptions(): MikroOrmModuleOptions {
+    const isDevMode = this.configService.get('NODE_ENV') === 'development';
+
     return {
       driver: PostgreSqlDriver,
       host: this.configService.get<string>('DB_HOST', 'localhost'),
@@ -18,21 +20,31 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
       user: this.configService.get<string>('DB_USER', 'postgres'),
       password: this.configService.get<string>('DB_PASSWORD', 'password'),
       dbName: this.configService.get<string>('DB_NAME', 'nestjs_boilerplate'),
-      entities: ['dist/**/*.entity.js'],
+      // ✅ Entities
+      ...(!isDevMode && {
+        entities: ['dist/**/*.entity.js'],
+      }),
       entitiesTs: ['src/**/*.entity.ts'],
+      // ✅ Migrations
       migrations: {
         path: 'dist/migrations',
         pathTs: 'src/migrations',
-        glob: '!(*.d).{js,ts}', // recommended to support bot
+        glob: '!(*.d).{js,ts}',
         transactional: true,
         disableForeignKeys: false,
-        emit: 'ts', // keep migrations in TS
+        emit: 'ts',
       },
+      // ✅ Seeders
       seeder: {
         path: 'dist/seeders',
         pathTs: 'src/seeders',
       },
-      debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      // ✅ Auto-load entities only in dev
+      autoLoadEntities: isDevMode,
+      // ✅ Logging
+      debug: isDevMode,
+      // ✅ Useful for CLI
+      allowGlobalContext: true,
     };
   }
 }

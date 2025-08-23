@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   RequestTimeoutException,
 } from '@nestjs/common';
@@ -15,9 +16,7 @@ import {
   wrap,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
-import { Role } from '../role/entities/role.entity';
-import { RoleProvider } from '@/features/role/providers/role-provider';
-// import { MailService } from '../mail/mail.service';
+import { StorageService } from '@/core/storage/storage.service';
 
 @Injectable()
 export class UserService {
@@ -32,30 +31,14 @@ export class UserService {
      */
     private readonly em: EntityManager,
     /**
-     * @description The RoleProvider is used to interact with role data.
+     * @description storage service to handle file uploads
      */
-    private readonly roleProvider: RoleProvider,
-    /**
-     * @description mail service
-     */
-    // private readonly mailService: MailService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    let role: Role | null = null;
     try {
-      role = await this.roleProvider.findByName(createUserDto.role);
-    } catch (error) {
-      throw new RequestTimeoutException();
-    }
-    if (!role) {
-      throw new NotFoundException(`Role ${createUserDto.role} does not exist.`);
-    }
-    try {
-      const user = this.userRepository.create({
-        ...createUserDto,
-        roles: [role],
-      });
+      const user = this.userRepository.create(createUserDto);
       await this.em.persistAndFlush(user);
 
       return {
@@ -75,15 +58,15 @@ export class UserService {
   }
 
   findOne(id: string) {
-    return this.userRepository.findOne(id, { populate: ['roles'] });
+    return this.userRepository.findOne(id);
   }
 
   findByUsername(username: string) {
-    return this.userRepository.findOne({ username }, { populate: ['roles'] });
+    return this.userRepository.findOne({ username });
   }
 
   findByEmail(email: string) {
-    return this.userRepository.findOne({ email }, { populate: ['roles'] });
+    return this.userRepository.findOne({ email });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -106,5 +89,28 @@ export class UserService {
 
   remove(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async uploadAvatar(file: Express.Multer.File, userId: string) {
+    const user = await this.findOne(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    try {
+      const uploadFile = await this.storageService.uploadFile(file);
+      if (!uploadFile) {
+        throw new InternalServerErrorException('Failed to upload avatar');
+      }
+      Logger.log(uploadFile, 'Upload File');
+      user.avatar = uploadFile.url;
+      await this.em.flush();
+      return {
+        message: 'Avatar uploaded successfully',
+        url: uploadFile.url,
+      };
+    } catch (error) {
+      Logger.error(error, 'UserService.uploadAvatar');
+      throw new RequestTimeoutException();
+    }
   }
 }

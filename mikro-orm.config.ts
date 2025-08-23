@@ -16,21 +16,18 @@ const mikroOrmConfig: Options = {
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   migrations: {
-    path: 'dist/migrations',   // for production
-    pathTs: 'src/migrations',  // for development
-    glob: '!(*.d).{js,ts}',    // recommended to support both
+    path: 'dist/migrations', // for production
+    pathTs: 'src/migrations', // for development
+    glob: '!(*.d).{js,ts}', // recommended to support both
     transactional: true,
     disableForeignKeys: false,
-    emit: 'ts',                // keep migrations in TS
+    emit: 'ts', // keep migrations in TS
   },
   seeder: {
     path: 'dist/seeders',
     pathTs: 'src/seeders',
   },
-  extensions: [
-    Migrator,
-    SeedManager
-  ]
+  extensions: [Migrator, SeedManager],
 };
 
 export default mikroOrmConfig;

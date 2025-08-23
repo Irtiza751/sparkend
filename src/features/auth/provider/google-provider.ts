@@ -30,7 +30,7 @@ export class GoogleProvider {
           sub: user.id,
           email: user.email,
           username: user.username,
-          roles: user.roles.map((r) => r.name),
+          role: user.role,
         });
         return { user, ...tokens };
       } else {
@@ -40,7 +40,7 @@ export class GoogleProvider {
           sub: socialUser.id,
           email: socialUser.email,
           username: socialUser.username,
-          roles: socialUser.roles.map((r) => r.name),
+          role: socialUser.role,
         });
         return { user: socialUser, ...tokens };
       }

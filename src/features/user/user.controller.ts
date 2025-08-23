@@ -7,14 +7,21 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Logger,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
-import { RoleGuard } from '../role/guards/role.guard';
+import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { RoleGuard } from '@/common/guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import { UserRoles } from '../role/enums/user-role.enum';
+import { Roles as UserRoles } from '@/enums/roles.enum';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from '../../decorators/user.decorator';
+import { JwtPayload } from '../../interfaces/jwt-payload.interface';
+import { UploadAvatarDto } from './dto/upload-avatar.dto';
 
 @Controller('user')
 @ApiBearerAuth('access-token')
@@ -46,5 +53,16 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
+  }
+
+  @Post('avatar')
+  @UseInterceptors(FileInterceptor('avatar'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UploadAvatarDto })
+  async uploadAvatar(
+    @UploadedFile() file: Express.Multer.File,
+    @User() user: JwtPayload,
+  ) {
+    return this.userService.uploadAvatar(file, user.sub);
   }
 }
