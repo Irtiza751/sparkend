@@ -1,18 +1,20 @@
+import { Roles } from '../enums/roles.enum';
+
 export interface JwtPayload {
   /**
    * @description user's uuid v4
    */
   sub: string;
   /**
-   * @description loggedin user email
+   * @description logged in user email
    */
   email: string;
   /**
-   * @description loggedin user username
+   * @description logged in user username
    */
   username: string;
   /**
-   * @description assigned roles of loggedin user
+   * @description assigned role of logged in user
    */
-  roles: string[];
+  role: Roles;
 }

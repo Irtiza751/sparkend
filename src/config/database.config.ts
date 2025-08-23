@@ -18,7 +18,9 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
       user: this.configService.get<string>('DB_USER', 'postgres'),
       password: this.configService.get<string>('DB_PASSWORD', 'password'),
       dbName: this.configService.get<string>('DB_NAME', 'nestjs_boilerplate'),
-      entities: ['dist/**/*.entity.js'],
+      ...(this.configService.get<string>('NODE_ENV') === 'production' && {
+        entities: ['dist/**/*.entity.js'],
+      }),
       entitiesTs: ['src/**/*.entity.ts'],
       migrations: {
         path: 'dist/migrations',
@@ -33,6 +35,8 @@ export class DatabaseConfig implements MikroOrmOptionsFactory {
         pathTs: 'src/seeders',
       },
       debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      autoLoadEntities:
+        this.configService.get<string>('NODE_ENV') !== 'production',
     };
   }
 }

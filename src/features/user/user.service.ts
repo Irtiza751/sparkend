@@ -15,9 +15,6 @@ import {
   wrap,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
-import { Role } from '../role/entities/role.entity';
-import { RoleProvider } from '@/features/role/providers/role-provider';
-// import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -32,30 +29,14 @@ export class UserService {
      */
     private readonly em: EntityManager,
     /**
-     * @description The RoleProvider is used to interact with role data.
-     */
-    private readonly roleProvider: RoleProvider,
-    /**
      * @description mail service
      */
     // private readonly mailService: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    let role: Role | null = null;
     try {
-      role = await this.roleProvider.findByName(createUserDto.role);
-    } catch (error) {
-      throw new RequestTimeoutException();
-    }
-    if (!role) {
-      throw new NotFoundException(`Role ${createUserDto.role} does not exist.`);
-    }
-    try {
-      const user = this.userRepository.create({
-        ...createUserDto,
-        roles: [role],
-      });
+      const user = this.userRepository.create(createUserDto);
       await this.em.persistAndFlush(user);
 
       return {
@@ -75,15 +56,15 @@ export class UserService {
   }
 
   findOne(id: string) {
-    return this.userRepository.findOne(id, { populate: ['roles'] });
+    return this.userRepository.findOne(id);
   }
 
   findByUsername(username: string) {
-    return this.userRepository.findOne({ username }, { populate: ['roles'] });
+    return this.userRepository.findOne({ username });
   }
 
   findByEmail(email: string) {
-    return this.userRepository.findOne({ email }, { populate: ['roles'] });
+    return this.userRepository.findOne({ email });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

@@ -10,9 +10,9 @@ import { JwtAuthGuard } from './features/auth/guards/jwt-auth.guard';
 import appConfig from './config/app.config';
 import { DatabaseConfig } from './config/database.config';
 import validateEnv from './config/validate.env';
-import { RoleModule } from './features/role/role.module';
 import { UserModule } from './features/user/user.module';
 import { MailModule } from './features/mail/mail.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -33,8 +33,8 @@ import { MailModule } from './features/mail/mail.module';
     }),
     AuthModule,
     UserModule,
-    RoleModule,
     MailModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [
