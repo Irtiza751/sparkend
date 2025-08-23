@@ -1,11 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { StorageProvider } from '../interfaces/storage-provider';
-import storageConfig from '../config/storage.config';
 import { ConfigType } from '@nestjs/config';
-import * as fs from 'fs/promises';
-import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { StorageResult } from '../interfaces/storage-result';
+
+import storageConfig from '../config/storage.config';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 @Injectable()
 export class DiskStorageProvider implements StorageProvider {

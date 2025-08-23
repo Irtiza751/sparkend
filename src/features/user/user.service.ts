@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   RequestTimeoutException,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import {
   wrap,
 } from '@mikro-orm/postgresql';
 import { User } from './entities/user.entity';
+import { StorageService } from '@/core/storage/storage.service';
 
 @Injectable()
 export class UserService {
@@ -29,9 +31,9 @@ export class UserService {
      */
     private readonly em: EntityManager,
     /**
-     * @description mail service
+     * @description storage service to handle file uploads
      */
-    // private readonly mailService: MailService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -87,5 +89,28 @@ export class UserService {
 
   remove(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async uploadAvatar(file: Express.Multer.File, userId: string) {
+    const user = await this.findOne(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    try {
+      const uploadFile = await this.storageService.uploadFile(file);
+      if (!uploadFile) {
+        throw new InternalServerErrorException('Failed to upload avatar');
+      }
+      Logger.log(uploadFile, 'Upload File');
+      user.avatar = uploadFile.url;
+      await this.em.flush();
+      return {
+        message: 'Avatar uploaded successfully',
+        url: uploadFile.url,
+      };
+    } catch (error) {
+      Logger.error(error, 'UserService.uploadAvatar');
+      throw new RequestTimeoutException();
+    }
   }
 }
