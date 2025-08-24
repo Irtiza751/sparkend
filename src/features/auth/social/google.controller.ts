@@ -1,11 +1,11 @@
 import { Controller, Get, Logger, Inject, UseGuards } from '@nestjs/common';
 import { GoogleAuthGuard } from '../guards/google-auth.guard';
-import { Public } from '@/decorators/public.decorator';
-import { User } from '@/decorators/user.decorator';
-import { SocialUser } from '@/interfaces/social-user';
+import { Public } from '@core/decorators/public.decorator';
+import { User } from '@core/decorators/user.decorator';
+import { SocialUser } from '@core/interfaces/social-user';
 import { GoogleProvider } from '../provider/google-provider';
 import { ConfigType } from '@nestjs/config';
-import appConfig from '@/config/app.config';
+import appConfig from '@config/app.config';
 
 @Public()
 @Controller('auth/google')

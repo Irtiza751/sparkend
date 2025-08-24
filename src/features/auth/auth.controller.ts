@@ -9,14 +9,13 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { Public } from '@/decorators/public.decorator';
+import { Public } from '@core/decorators/public.decorator';
 import { SigninDto } from './dto/signin.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { RefreshDto } from './dto/refresh.dto';
-import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
+import { GeneratedTokens } from '@core/interfaces/generated-tokens.interface';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { AuthReqUser } from '../../interfaces/auth-req-user';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
@@ -32,8 +31,8 @@ export class AuthController {
   @Post('/signin')
   @UseGuards(LocalAuthGuard)
   @Public()
-  signIn(@Body() siginDto: SigninDto) {
-    return this.authService.signInUser(siginDto);
+  signIn(@Body() signinDto: SigninDto) {
+    return this.authService.signInUser(signinDto);
   }
 
   @Post('/refresh')

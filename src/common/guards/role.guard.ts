@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { JwtPayload } from '@/interfaces/jwt-payload.interface';
+import { JwtPayload } from '@core/interfaces/jwt-payload.interface';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

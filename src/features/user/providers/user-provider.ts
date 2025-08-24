@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { SocialUser } from '@/interfaces/social-user';
+import { SocialUser } from '@core/interfaces/social-user';
 
 @Injectable()
 export class UserProvider {

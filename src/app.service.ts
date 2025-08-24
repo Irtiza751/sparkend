@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { HealthCheck } from './interfaces/health.interface';
+import { HealthCheck } from '@core/interfaces/health.interface';
 
 @Injectable()
 export class AppService {

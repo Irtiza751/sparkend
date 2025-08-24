@@ -17,15 +17,15 @@ import { Validator } from '@/utils/validator';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshDto } from './dto/refresh.dto';
-import { JwtResponse } from '@/interfaces/jwt-response.interface';
-import { JwtPayload } from '@/interfaces/jwt-payload.interface';
-import { GeneratedTokens } from '@/interfaces/generated-tokens.interface';
+import { JwtResponse } from '@core/interfaces/jwt-response.interface';
+import { JwtPayload } from '@core/interfaces/jwt-payload.interface';
+import { GeneratedTokens } from '@core/interfaces/generated-tokens.interface';
 import { User } from '../user/entities/user.entity';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { MailService } from '../mail/mail.service';
-import { JwtVerification } from '@/interfaces/jwt-verification.interface';
+import { JwtVerification } from '@core/interfaces/jwt-verification.interface';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { BaseResponse } from '@/interfaces/base-response';
+import { BaseResponse } from '@core/interfaces/base-response';
 
 @Injectable()
 export class AuthService {

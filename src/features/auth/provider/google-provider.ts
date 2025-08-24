@@ -1,8 +1,8 @@
 import { Injectable, Logger, RequestTimeoutException } from '@nestjs/common';
 import { UserService } from '@/features/user/user.service';
 
-import { SocialUser } from '@/interfaces/social-user';
-import { UserProvider } from '@/features/user/providers/user-provider';
+import { SocialUser } from '@core/interfaces/social-user';
+import { UserProvider } from '@features/user/providers/user-provider';
 import { AuthService } from '../auth.service';
 
 @Injectable()
