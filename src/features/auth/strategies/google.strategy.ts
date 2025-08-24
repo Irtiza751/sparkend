@@ -6,7 +6,7 @@ import { ConfigType } from '@nestjs/config';
 import { GoogleProvider } from '../provider/google-provider';
 import { AuthProvider } from '@/features/user/enums/auth-provider';
 import { SocialUser } from '@/interfaces/social-user';
-import { Roles } from '@/enums/roles.enum';
+import { Roles } from '@/core/enums/roles.enum';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {

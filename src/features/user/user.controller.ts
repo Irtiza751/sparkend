@@ -17,7 +17,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { RoleGuard } from '@/common/guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import { Roles as UserRoles } from '@/enums/roles.enum';
+import { Roles as UserRoles } from '@/core/enums/roles.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../decorators/user.decorator';
 import { JwtPayload } from '../../interfaces/jwt-payload.interface';

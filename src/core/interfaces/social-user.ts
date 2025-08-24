@@ -1,5 +1,5 @@
 import { AuthProvider } from '@/features/user/enums/auth-provider';
-import { Roles } from '@/enums/roles.enum';
+import { Roles } from '@/core/enums/roles.enum';
 
 export interface SocialUser {
   provider: AuthProvider;

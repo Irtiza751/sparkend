@@ -11,8 +11,8 @@ import {
 import { AuthProvider } from '../enums/auth-provider';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcryptjs';
-import { BaseEntity } from '@/classes/base-entity';
-import { Roles } from '@/enums/roles.enum';
+import { BaseEntity } from '@/core/classes/base-entity';
+import { Roles } from '@/core/enums/roles.enum';
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntity<'roles'> {

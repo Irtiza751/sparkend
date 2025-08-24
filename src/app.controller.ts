@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiTags } from '@nestjs/swagger';
-import { HealthCheck } from './interfaces/health.interface';
-import { Public } from './decorators/public.decorator';
+import { HealthCheck } from '@core/interfaces/health.interface';
+import { Public } from '@core/decorators/public.decorator';
 
 @ApiTags('Health Check')
 @Controller()
