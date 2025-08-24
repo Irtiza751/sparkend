@@ -13,4 +13,20 @@ export class StorageService {
   uploadFile(file: Express.Multer.File): Promise<StorageResult> {
     return this.storageProvider.upload(file);
   }
+
+  deleteFile(id: string): Promise<void> {
+    return this.storageProvider.delete(id);
+  }
+
+  getFileUrl(id: string): Promise<string> {
+    return this.storageProvider.getUrl(id);
+  }
+
+  downloadFile(id: string): Promise<Buffer> {
+    return this.storageProvider.getFile(id);
+  }
+
+  exists(id: string): Promise<boolean> {
+    return this.storageProvider.exists(id);
+  }
 }

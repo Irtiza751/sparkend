@@ -3,7 +3,7 @@ import { StorageProvider } from '../interfaces/storage-provider';
 import { ConfigType } from '@nestjs/config';
 import { v4 as uuidv4 } from 'uuid';
 import { StorageResult } from '../interfaces/storage-result';
-
+// default imports
 import storageConfig from '../config/storage.config';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -50,19 +50,41 @@ export class DiskStorageProvider implements StorageProvider {
     };
   }
 
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    const files = await fs.readdir(this.uploadPath);
+    const fileToDelete = files.find((file) => file.startsWith(id));
+    if (fileToDelete) {
+      const filePath = path.join(this.uploadPath, fileToDelete);
+      await fs.unlink(filePath);
+    } else {
+      throw new Error('File not found');
+    }
   }
 
-  getUrl(id: string): Promise<string> {
-    throw new Error('Method not implemented.');
+  async getUrl(id: string): Promise<string> {
+    const files = await fs.readdir(this.uploadPath);
+    const file = files.find((f) => f.startsWith(id));
+
+    if (!file) {
+      throw new Error('File not found');
+    }
+
+    return `${this.baseUrl}/${file}`;
   }
 
-  getFile(id: string): Promise<Buffer> {
-    throw new Error('Method not implemented.');
+  async getFile(id: string): Promise<Buffer> {
+    const files = await fs.readdir(this.uploadPath);
+    const file = files.find((f) => f.startsWith(id));
+
+    if (!file) {
+      throw new Error('File not found');
+    }
+
+    return fs.readFile(path.join(this.uploadPath, file));
   }
 
-  exists(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(id: string): Promise<boolean> {
+    const files = await fs.readdir(this.uploadPath);
+    return files.some((f) => f.startsWith(id));
   }
 }
